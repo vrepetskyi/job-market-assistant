@@ -1,5 +1,6 @@
 import openai
 import vertexai
+from llama_index.llms.llama_cpp import LlamaCPP
 from vertexai.generative_models import GenerativeModel
 
 
@@ -63,12 +64,26 @@ class Gemini(Model):
 class Llama(Model):
     def __init__(self, debug=False) -> None:
         self.debug = debug
+        self.model = LlamaCPP(
+            # URL to download the model in GGUF format
+            model_url="https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q5_0.gguf",
+            # controls the randomness of the text generation. A lower temperature like 0.1 makes the model output more deterministic and focused, while a higher temperature makes it produce more varied and creative text.
+            temperature=0.1,
+            # Maximum number of tokens that model will generate in response to prompt
+            max_new_tokens=300,
+            # the number of tokens the model can consider when generating new text. For the Lama2 the maximal number is 4096
+            context_window=3900,
+            # set to at least 1 layer to use GPU
+            # greate number may speed up computations bu also lead to "out of memeory" errors
+            model_kwargs={"n_gpu_layers": 32},
+            verbose=True,
+        )
 
     def complete(self, prompt: str) -> str:
         prompt = prompt.strip()
         super().debug(f">>> {__class__.__name__}: {prompt}")
 
-        completion = ""
+        completion = self.model.complete(prompt)
 
         completion = completion.strip()
         super().debug(f"{__class__.__name__} >>>: {completion}")

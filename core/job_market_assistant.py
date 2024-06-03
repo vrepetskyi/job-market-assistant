@@ -2,6 +2,7 @@ from typing import Iterable
 
 import pandas as pd
 from IPython.display import Markdown, display
+from linkedin_jobs_scraper.query import Query
 
 from .helpers import get_retriever, nodes_to_postings
 from .linkedin_scraping import scrap_urls
@@ -23,8 +24,10 @@ class JobMarketAssistant:
         self.key_points_prompt = key_points_prompt
         self.missing_skills_prompt = missing_skills_prompt
 
-    def scrap_job_postings_from_linkedin(urls: Iterable[str]) -> pd.DataFrame:
-        return scrap_urls(urls)
+    def scrap_urls(linkedin_urls: Iterable[str]) -> pd.DataFrame:
+        return scrap_urls(linkedin_urls)
+
+    def scrap_query(queries: Iterable[Query]) -> pd.DataFrame: ...
 
     def get_cover_letter(self, job_posting: pd.Series, cv: str) -> str:
         job_title, company, job_desc, location = job_posting
