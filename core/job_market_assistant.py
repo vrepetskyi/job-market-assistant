@@ -13,14 +13,14 @@ class JobMarketAssistant:
         self,
         model: Model,
         cover_letter_prompt: str,
-        dream_job_prompt: str,
+        job_title_prompt: str,
         key_points_prompt: str,
         missing_skills_prompt: str,
         postprocess_prompt: str = None,
     ) -> None:
         self.model = model
         self.cover_letter_prompt = cover_letter_prompt
-        self.dream_job_prompt = dream_job_prompt
+        self.job_title_prompt = job_title_prompt
         self.key_points_prompt = key_points_prompt
         self.missing_skills_prompt = missing_skills_prompt
         self.postprocess_prompt = postprocess_prompt
@@ -51,19 +51,19 @@ class JobMarketAssistant:
         self,
         top_10: pd.DataFrame,
         cv: str,
-        dream_job: str = None,
+        job_title: str = None,
     ) -> str:
-        final_dream_job = dream_job
-        if not dream_job:
-            final_dream_job = self.model.complete(self.dream_job_prompt.format(cv=cv))
+        final_job_title = job_title
+        if not job_title:
+            final_job_title = self.model.complete(self.job_title_prompt.format(cv=cv))
 
         retriever = get_retriever(top_10)
-        nodes = retriever.retrieve(final_dream_job)
+        nodes = retriever.retrieve(final_job_title)
         top_10 = nodes_to_postings(nodes)
 
         display(
             Markdown(
-                f'### Postings best matching job title {final_dream_job}{"" if dream_job else ", which was derived from the CV"}'
+                f'### Postings best matching job title {final_job_title}{"" if job_title else " (derived from the CV)"}'
             )
         )
         display(top_10)
@@ -71,15 +71,13 @@ class JobMarketAssistant:
         key_points = "\n\n".join(
             self.model.complete(
                 self.key_points_prompt.format(
-                    index=index,
                     job_title=job_title,
                     company=company,
                     job_desc=job_desc,
                     location=location,
-                    score=score,
                 )
             )
-            for index, job_title, company, job_desc, location, score in top_10.itertuples()
+            for _, job_title, company, job_desc, location, _ in top_10.itertuples()
         )
 
         missing_skills = self.model.complete(
