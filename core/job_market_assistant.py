@@ -16,14 +16,12 @@ class JobMarketAssistant:
         job_title_prompt: str,
         key_points_prompt: str,
         missing_skills_prompt: str,
-        postprocess_prompt: str = None,
     ) -> None:
         self.model = model
         self.cover_letter_prompt = cover_letter_prompt
         self.job_title_prompt = job_title_prompt
         self.key_points_prompt = key_points_prompt
         self.missing_skills_prompt = missing_skills_prompt
-        self.postprocess_prompt = postprocess_prompt
 
     def scrap_job_postings_from_linkedin(urls: Iterable[str]) -> pd.DataFrame:
         return scrap_urls(urls)
@@ -81,13 +79,8 @@ class JobMarketAssistant:
         )
 
         missing_skills = self.model.complete(
-            self.missing_skills_prompt.format(cv=cv, key_points=key_points)
+            self.missing_skills_prompt.format(key_points=key_points, cv=cv)
         )
-
-        if self.postprocess_prompt:
-            missing_skills = self.model.complete(
-                self.postprocess_prompt.format(missing_skills=missing_skills)
-            )
 
         display(Markdown("### Missing skills:\n" + missing_skills))
 
