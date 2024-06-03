@@ -49,7 +49,7 @@ class JobMarketAssistant:
 
     def get_missing_skills(
         self,
-        top_10: pd.DataFrame,
+        job_postings: pd.DataFrame,
         cv: str,
         job_title: str = None,
     ) -> str:
@@ -57,7 +57,7 @@ class JobMarketAssistant:
         if not job_title:
             final_job_title = self.model.complete(self.job_title_prompt.format(cv=cv))
 
-        retriever = get_retriever(top_10)
+        retriever = get_retriever(job_postings)
         nodes = retriever.retrieve(final_job_title)
         top_10 = nodes_to_postings(nodes)
 
