@@ -1,0 +1,18 @@
+Education:
+
+Computer Science - 2018/2022 - Graduated with a focus on Software Development
+Artificial Intelligence - 2022/2026 (expected graduation year) - currently in the first year
+Including courses like - Algorithms, Data Structures, Machine Learning, Deep Learning, Big Data, Computer Vision
+Internship - at Google during the summer of 2022
+Member of academic club - AI Innovators - currently leading a project on AI in healthcare
+Skills:
+
+Programming languages: Java, Python, JavaScript, SQL
+Familiar with Agile methodologies
+Driving license
+English: Fluent C1
+Employment History:
+
+September 2022 - present - Software Engineer, Tech Solutions, Warsaw
+June - August 2022 - Software Development Intern, Google, Mountain View
+July - August 2018 - IT Support, Local Tech Company, Warsaw

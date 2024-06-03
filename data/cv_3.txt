@@ -1,0 +1,15 @@
+Education:
+
+Computer Engineering - 2017/2021 - Graduated with a focus on Hardware and Systems
+Data Science - 2021/2025 (expected graduation year) - currently in the second year
+Including courses like - Statistics, Data Mining, Machine Learning, Big Data, Information Retrieval
+Internship - at Microsoft during the summer of 2021
+Member of academic club - Data Science Society - currently in the team organizing annual Data Science conference
+
+Skills:
+
+Programming languages: 
+Python, R, SQL, C#
+Proficient in Microsoft Azure
+Driving license
+English: Fluent C1
