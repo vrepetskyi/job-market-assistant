@@ -8,6 +8,8 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 
 def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
+    "Composes the original job postings to a retriever that enables lookup of postings similar to a query."
+
     # The job postings are converted into LamaIndex document objects.
     # More about it here: https://docs.llamaindex.ai/en/stable/module_guides/loading/documents_and_nodes/
     documents = []
@@ -44,8 +46,8 @@ def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
     return retriever
 
 
-# Prints the information about the nodes retrived from the dataset of job postings documents (Arguments: nodes returned by VectorIndexRetriever)
 def nodes_to_postings(nodes: List[NodeWithScore]) -> pd.DataFrame:
+    "A helper function transforming job postings nodes to the original representation."
     return pd.DataFrame(
         (
             (

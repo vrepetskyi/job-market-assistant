@@ -9,7 +9,7 @@ from linkedin_jobs_scraper.query import Query
 
 
 def scrap_queries(queries: List[Query]) -> pd.DataFrame:
-    """Scrape publicly available LinkedIn job postings matching the queries"""
+    "Scrape publicly available LinkedIn job postings matching the queries."
 
     # Use a headless browser
     scraper = LinkedinScraper(
@@ -47,7 +47,7 @@ def scrap_queries(queries: List[Query]) -> pd.DataFrame:
 
 
 def scrap_urls(urls: Iterable[str]) -> pd.DataFrame:
-    """Scrape publicly available LinkedIn job postings by their URLs"""
+    "Scrape publicly available LinkedIn job postings by their URLs."
 
     entries = []
 

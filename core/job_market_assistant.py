@@ -6,6 +6,12 @@ from .retriever import get_retriever, nodes_to_postings
 
 
 class JobMarketAssistant:
+    """
+    A tool to help you find your niche in the job market.
+    Generate cover letters for interesting job posting.
+    Identify skill gaps based on the available offers, your CV, and the desired job title.
+    """
+
     def __init__(
         self,
         model: Model,
@@ -14,13 +20,18 @@ class JobMarketAssistant:
         key_points_prompt: str,
         missing_skills_prompt: str,
     ) -> None:
+        "Initialize the tool with a LLM model of choice and a set of respective prompts."
+
         self.model = model
+
         self.cover_letter_prompt = cover_letter_prompt
         self.job_title_prompt = job_title_prompt
         self.key_points_prompt = key_points_prompt
         self.missing_skills_prompt = missing_skills_prompt
 
     def get_cover_letter(self, job_posting: pd.Series, cv: str) -> str:
+        "Generate a cover letter for a selected job posting based on a CV."
+
         job_title, company, job_desc, location = job_posting
 
         prompt = self.cover_letter_prompt.format(
@@ -45,6 +56,11 @@ class JobMarketAssistant:
         cv: str,
         job_title: str = None,
     ) -> str:
+        """
+        Get top 10 job postings matching the job title and a list of skills required for these jobs that are missing in the CV.
+        If the desired job title is not provided it will be generated automatically from the CV.
+        """
+
         final_job_title = job_title
         if not job_title:
             final_job_title = self.model.complete(self.job_title_prompt.format(cv=cv))
