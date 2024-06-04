@@ -1,10 +1,6 @@
-from typing import Iterable
-
 import pandas as pd
 from IPython.display import Markdown, display
-from linkedin_jobs_scraper.query import Query
 
-from .linkedin_scraper import scrap_urls
 from .models import Model
 from .retriever import get_retriever, nodes_to_postings
 
@@ -23,11 +19,6 @@ class JobMarketAssistant:
         self.job_title_prompt = job_title_prompt
         self.key_points_prompt = key_points_prompt
         self.missing_skills_prompt = missing_skills_prompt
-
-    def scrap_urls(linkedin_urls: Iterable[str]) -> pd.DataFrame:
-        return scrap_urls(linkedin_urls)
-
-    def scrap_query(queries: Iterable[Query]) -> pd.DataFrame: ...
 
     def get_cover_letter(self, job_posting: pd.Series, cv: str) -> str:
         job_title, company, job_desc, location = job_posting
