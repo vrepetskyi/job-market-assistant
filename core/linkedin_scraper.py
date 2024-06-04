@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, List
 
 import pandas as pd
 import requests
@@ -8,7 +8,7 @@ from linkedin_jobs_scraper.events import EventData, Events
 from linkedin_jobs_scraper.query import Query
 
 
-def scrap_query(queries: Iterable[Query]) -> pd.DataFrame:
+def scrap_queries(queries: List[Query]) -> pd.DataFrame:
     """Scrape publicly available LinkedIn job postings matching the queries"""
 
     # Use a headless browser
