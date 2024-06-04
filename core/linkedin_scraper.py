@@ -1,4 +1,4 @@
-from typing import Iterable, List
+from typing import Generator, Iterable, List, Tuple
 
 import pandas as pd
 import requests
@@ -21,7 +21,7 @@ def scrap_queries(queries: List[Query]) -> pd.DataFrame:
         slow_mo=3,
     )
 
-    entries = []
+    entries: List[Tuple[str, str, str, str]] = []
 
     # Store each successfully processed posting in a list
     def on_data(data: EventData):
@@ -49,7 +49,7 @@ def scrap_queries(queries: List[Query]) -> pd.DataFrame:
 def scrap_urls(urls: Iterable[str]) -> pd.DataFrame:
     "Scrape publicly available LinkedIn job postings by their URLs."
 
-    entries = []
+    entries: List[Generator[str, None, None]] = []
 
     for url in urls:
         response = requests.get(url)

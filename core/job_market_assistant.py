@@ -54,7 +54,7 @@ class JobMarketAssistant:
         self,
         job_postings: pd.DataFrame,
         cv: str,
-        job_title: str = None,
+        job_title: str | None = None,
     ) -> str:
         """
         Get top 10 job postings matching the job title and a list of skills required for these jobs that are missing in the CV.

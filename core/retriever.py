@@ -17,6 +17,8 @@ def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
         documents.append(
             Document(
                 text=row["job_desc"],
+                # type: ignore[call-arg] # metadata argument is present in the documentation:
+                # https://docs.llamaindex.ai/en/stable/module_guides/loading/documents_and_nodes/usage_documents/
                 metadata={
                     "job_title": row["job_title"],
                     "company": row["company"],
