@@ -8,8 +8,10 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 
 def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
+    # The job postings are converted into LamaIndex document objects.
+    # More about it here: https://docs.llamaindex.ai/en/stable/module_guides/loading/documents_and_nodes/
     documents = []
-    for index, row in job_postings.iterrows():
+    for _, row in job_postings.iterrows():
         documents.append(
             Document(
                 text=row["job_desc"],
@@ -24,9 +26,16 @@ def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
             )
         )
 
+    # We selected this embedings mostly based on thier efficiency. The embeding is required for indexing process
     embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+
+    # Indexing is required to enable a fast retrival of documents (job offers) matching the user query.
+    # Indexing process includes embedding the text of the documents, and then putting them into the organized index structure, which enables fast search.
+    # To build the index and store it we use VectorStoreIndex class from LamaIndex: https://docs.llamaindex.ai/en/stable/module_guides/indexing/vector_store_index/
     index = VectorStoreIndex.from_documents(documents, embed_model=embed_model)
 
+    # We also declare a retriver which will be later used to compares the job description embedding against the job offers embeddings in the index to find a few job offers,
+    # based on which the recomendation will be generated: https://ts.llamaindex.ai/api/classes/VectorIndexRetriever
     retriever = VectorIndexRetriever(
         index=index,
         similarity_top_k=10,
@@ -35,6 +44,7 @@ def get_retriever(job_postings: pd.DataFrame) -> VectorIndexRetriever:
     return retriever
 
 
+# Prints the information about the nodes retrived from the dataset of job postings documents (Arguments: nodes returned by VectorIndexRetriever)
 def nodes_to_postings(nodes: List[NodeWithScore]) -> pd.DataFrame:
     return pd.DataFrame(
         (

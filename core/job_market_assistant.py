@@ -69,6 +69,7 @@ class JobMarketAssistant:
         )
         display(top_10)
 
+        # Prompt the model to extract the keypoints from a single retrived job posting
         key_points = "\n\n".join(
             self.model.complete(
                 self.key_points_prompt.format(
@@ -81,6 +82,7 @@ class JobMarketAssistant:
             for _, job_title, company, job_desc, location, _ in top_10.itertuples()
         )
 
+        # Compose the main prompt based on the extracted key_points and cv
         missing_skills = self.model.complete(
             self.missing_skills_prompt.format(key_points=key_points, cv=cv)
         )
