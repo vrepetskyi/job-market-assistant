@@ -2,7 +2,7 @@ import csv
 import os
 import unittest
 
-from linkedin_scraping import scrap_query
+from core.linkedin_scraper import scrap_query
 
 FILE_NAME = "jobs_test.csv"
 COL_NUMBER = 9

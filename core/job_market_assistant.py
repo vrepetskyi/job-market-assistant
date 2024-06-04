@@ -4,9 +4,9 @@ import pandas as pd
 from IPython.display import Markdown, display
 from linkedin_jobs_scraper.query import Query
 
-from .helpers import get_retriever, nodes_to_postings
-from .linkedin_scraping import scrap_urls
+from .linkedin_scraper import scrap_urls
 from .models import Model
+from .retriever import get_retriever, nodes_to_postings
 
 
 class JobMarketAssistant:
